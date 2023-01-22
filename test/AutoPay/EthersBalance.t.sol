@@ -18,7 +18,6 @@ contract EtherBalanceTest is BaseSetup {
         ap.withdraw();
     }
 
-
     function test_that_withdraw_should_transfer_all_ether() public {
         vm.startPrank(owner);
         ap.deposit{value: 2000 ether}();
@@ -34,5 +33,32 @@ contract EtherBalanceTest is BaseSetup {
         vm.prank(owner);
         vm.expectRevert(abi.encodeWithSelector(NoEthers.selector));
         ap.withdraw();
+    }
+
+    function test_that_total_cost_is_zero_when_no_employees_added() public {
+        assertEq(ap.totalCost(), 0, "Total cost should be zero when no employees are added");
+    }
+
+    function test_that_total_cost_is_correctly_calculated() public {
+        vm.startPrank(owner);
+
+        ap.addEmployee(alice, salaryAmount);
+        ap.addEmployee(bob, salaryAmount);
+
+        vm.stopPrank();
+
+        assertEq(ap.totalCost(), salaryAmount * 2, "Total cost is not correctly calculated");
+    }
+
+    function test_that_total_cost_is_correctly_calculated_after_removing_employee() public {
+        vm.startPrank(owner);
+
+        ap.addEmployee(bob, salaryAmount);
+        ap.addEmployee(alice, salaryAmount);
+        ap.removeEmployee(alice);
+
+        vm.stopPrank();
+
+        assertEq(ap.totalCost(), salaryAmount, "Total cost is not correctly calculated after removing employee");
     }
 }
