@@ -5,6 +5,7 @@ import {Array, Storage} from "./AutoPay.Storage.sol";
 
 error EmployeeExists(address employee);
 error Unauthorized(address investor);
+error NoEthers();
 
 abstract contract Auth is Storage {
     using Array for address[];
@@ -20,6 +21,12 @@ abstract contract Auth is Storage {
     function checkEmployeeExists(address employee) internal view {
         if (_employees.check(employee)) {
             revert EmployeeExists(employee);
+        }
+    }
+
+    function checkZeroBalance() internal view {
+        if(address(this).balance == 0) {
+            revert NoEthers();
         }
     }
 }
