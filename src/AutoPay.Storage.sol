@@ -1,18 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import {Array} from "./lib/Array.sol";
 import {Events} from "./AutoPay.Events.sol";
+import {Array} from "./lib/Array.sol";
 
 contract Storage is Events {
-    using Array for address[];
     address internal owner;
 
     struct Employee {
-        uint256 salaryAmount;
         uint256 nextPayment;
+        uint256 salary;
+        uint256 index;
         bool active;
     }
+
     mapping(address => Employee) mappingOfEmployees;
     address[] internal _employees;
 
