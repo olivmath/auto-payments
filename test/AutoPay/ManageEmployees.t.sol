@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.17;
 
-import {EmployeeExists} from "../src/AutoPay.Auth.sol";
-import {AutoPayments} from "../src/AutoPay.sol";
-import {BaseSetup} from "./BaseSetup.sol";
+import {EmployeeExists, Unauthorized} from "../../src/AutoPay.Auth.sol";
+import {AutoPayments} from "../../src/AutoPay.sol";
+import {BaseSetup} from "../BaseSetup.sol";
 
 contract ManageTest is BaseSetup {
     uint256 salaryAmount;
@@ -11,6 +11,12 @@ contract ManageTest is BaseSetup {
     function setUp() public virtual override {
         BaseSetup.setUp();
         salaryAmount = 100;
+    }
+
+    function test_that_an_unauthorized_user_try_added_new_employee() public {
+        vm.prank(bob);
+        vm.expectRevert(abi.encodeWithSelector(Unauthorized.selector, bob));
+        ap.addEmployee(bob, 10000);
     }
 
     function test_that_an_employee_can_be_added_to_the_contract() public {
