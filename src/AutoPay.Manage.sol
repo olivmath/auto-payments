@@ -1,26 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import {Auth} from "./AutoPay.Auth.sol";
+import {Array, Auth, EmployeeExists} from "./AutoPay.Auth.sol";
 
 abstract contract Manage is Auth {
-    constructor() Auth() {
+    using Array for address[];
 
-    }
+    constructor() Auth() {}
 
-    function add(address employeeAddress, uint256 salaryAmount)
-        public
-    {
-        require(!_employees.check(employeeAddress), "Employee already added");
+    function addEmployee(address employee, uint256 salary) public {
+        onlyOwner(msg.sender);
+        checkEmployeeExists(employee);
+
         uint256 _nextPayment = nextPayment();
-        _employees.push(employeeAddress);
-        mappingOfEmployees[employeeAddress] = Employee(
-            salaryAmount * 10e17,
-            _nextPayment,
-            true
-        );
-
-        emit NewEmployee(employeeAddress, salaryAmount, _nextPayment);
+        mappingOfEmployees[employee] = Employee(_nextPayment, salary, _employees.length, true);
+        _employees.push(employee);
     }
 
 
