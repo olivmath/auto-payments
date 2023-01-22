@@ -24,11 +24,10 @@ abstract contract Manage is Auth {
         _employees.remove(mappingOfEmployees[employee].index);
     }
 
-    function edit(address employeeAddress, uint256 newSalary) public {
-        // require(_employees.check(employeeAddress), "Employee not exists");
-        mappingOfEmployees[employeeAddress].salaryAmount = newSalary * 10e17;
+    function editEmployee(address employee, uint256 newSalary) public {
+        onlyOwner(msg.sender);
 
-        emit NewSalary(employeeAddress, newSalary);
+        mappingOfEmployees[employee].salary = newSalary * 10e17;
     }
 
 
