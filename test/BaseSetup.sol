@@ -5,9 +5,10 @@ import {AutoPayments} from "../src/AutoPay.sol";
 import {Test} from "forge-std/Test.sol";
 
 contract BaseSetup is Test {
-    bytes32 internal nextUser = keccak256(abi.encodePacked("test test test test test test test test test test test junk"));
+    bytes32 internal nextUser =
+        keccak256(abi.encodePacked("test test test test test test test test test test test junk"));
 
-     function getNextUserAddress() private returns (address payable) {
+    function getNextUserAddress() private returns (address payable) {
         //bytes32 to address conversion
         address payable user = payable(address(uint160(uint256(nextUser))));
         nextUser = keccak256(abi.encodePacked(nextUser));

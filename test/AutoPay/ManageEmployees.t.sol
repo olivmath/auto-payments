@@ -84,7 +84,6 @@ contract ManageTest is BaseSetup {
         vm.startPrank(owner);
         address[] memory employees = ap.employees();
 
-
         assertEq(employees.length, 0, "Employee have more than one");
         vm.expectRevert(abi.encodeWithSelector(EmployeeExists.selector, nonExistentEmployee));
         ap.editEmployee(nonExistentEmployee, 200);
