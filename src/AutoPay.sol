@@ -11,7 +11,7 @@ contract AutoPayments is Base {
             address payable employee = payable(_employees[i]);
             if (verifyPayment(employee) == true) {
                 uint256 amount = mappingOfEmployees[employee].salary;
-                require(balance() > amount, "Contract not have balance for pay employee");
+                require(address(this).balance > amount, "Contract not have balance for pay employee");
                 (bool sent,) = employee.call{value: amount}("");
                 require(sent, "Failed to send eth to employee");
 
