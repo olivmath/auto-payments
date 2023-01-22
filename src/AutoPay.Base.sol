@@ -18,11 +18,12 @@ contract Base is Manage {
         return totalCust;
     }
 
-    function balance() public view returns (uint256) {
-        return address(this).balance;
-    }
+    function deposit() public payable {}
 
-    function deposit() public payable {
-        // onlyOwner(msg.sender);
+    function withdraw() public {
+        onlyOwner(msg.sender);
+        checkZeroBalance();
+
+        payable(msg.sender).transfer(address(this).balance);
     }
 }
