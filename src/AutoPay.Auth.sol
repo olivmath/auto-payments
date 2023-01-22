@@ -3,6 +3,7 @@ pragma solidity ^0.8.17;
 
 import {Array, Storage} from "./AutoPay.Storage.sol";
 
+error EmployeeNotExists(address employee);
 error EmployeeExists(address employee);
 error Unauthorized(address investor);
 error NoEthers();
@@ -18,14 +19,23 @@ abstract contract Auth is Storage {
         }
     }
 
+    function checkEmployee(address employee) private view returns (bool) {
+        return _employees.check(employee);
+    }
+    function checkEmployeeNotExists(address employee) internal view {
+        if (checkEmployee(employee)) {
+            revert EmployeeNotExists(employee);
+        }
+    }
+
     function checkEmployeeExists(address employee) internal view {
-        if (_employees.check(employee)) {
+        if (!checkEmployee(employee)) {
             revert EmployeeExists(employee);
         }
     }
 
     function checkZeroBalance() internal view {
-        if(address(this).balance == 0) {
+        if (address(this).balance == 0) {
             revert NoEthers();
         }
     }
