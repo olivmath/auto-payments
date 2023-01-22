@@ -17,13 +17,11 @@ abstract contract Manage is Auth {
         _employees.push(employee);
     }
 
+    function removeEmployee(address employee) public {
+        onlyOwner(msg.sender);
 
-    function removeEmployee(address employeeAddress) public {
-        // onlyOwner(msg.sender);
-        // require(_employees.check(employeeAddress), "Employee not exists");
-        delete (mappingOfEmployees[employeeAddress]);
-
-        emit EmployeeRemoved(employeeAddress);
+        mappingOfEmployees[employee].active = false;
+        _employees.remove(mappingOfEmployees[employee].index);
     }
 
     function edit(address employeeAddress, uint256 newSalary) public {
