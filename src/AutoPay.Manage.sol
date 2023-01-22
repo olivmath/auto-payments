@@ -65,28 +65,7 @@ abstract contract Manage is Auth {
         return block.number + monthInBlocks();
     }
 
-    function balance() public view returns (uint256) {
-        return address(this).balance;
-    }
-
-    function totalCost() public view returns (uint256) {
-        uint256 totalCust = 0;
-        for (uint256 i = 0; i < _employees.length; i++) {
-            totalCust += mappingOfEmployees[_employees[i]].salaryAmount;
-        }
-        return totalCust;
-    }
-
     function employees() public view returns (address[] memory) {
         return _employees;
-    }
-
-        function verifyPayment(address employee) internal view returns (bool) {
-        return
-            block.number >= mappingOfEmployees[employee].nextPayment &&
-            mappingOfEmployees[employee].salaryAmount > 0;
-    }
-           function deposit() public payable {
-        // onlyOwner(msg.sender);
     }
 }
