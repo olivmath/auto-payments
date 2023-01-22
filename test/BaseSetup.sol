@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
+import {Test} from "forge-std/Test.sol";
 import {Utils} from "./Utils.sol";
 
-contract BaseSetup is Utils {
+contract BaseSetup is Test, Utils {
     address owner;
     address bob;
     address alise;
