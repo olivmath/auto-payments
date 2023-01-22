@@ -30,17 +30,12 @@ abstract contract Manage is Auth {
         mappingOfEmployees[employee].salary = newSalary * 10e17;
     }
 
-
-    function salary(address employeeAddress) public view returns (uint256) {
-        return mappingOfEmployees[employeeAddress].salaryAmount;
+    function salaryOf(address employee) public view returns (uint256) {
+        return mappingOfEmployees[employee].salary;
     }
 
-    function nextPayment(address employeeAddress)
-        public
-        view
-        returns (uint256)
-    {
-        return mappingOfEmployees[employeeAddress].nextPayment;
+    function nextPayment(address employee) public view returns (uint256) {
+        return mappingOfEmployees[employee].nextPayment;
     }
 
     function monthInBlocks() internal pure returns (uint256) {
