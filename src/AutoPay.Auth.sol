@@ -22,6 +22,7 @@ abstract contract Auth is Storage {
     function checkEmployee(address employee) private view returns (bool) {
         return _employees.check(employee);
     }
+
     function checkEmployeeNotExists(address employee) internal view {
         if (checkEmployee(employee)) {
             revert EmployeeNotExists(employee);
