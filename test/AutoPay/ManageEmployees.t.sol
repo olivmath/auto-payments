@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
 import {EmployeeNotExists, EmployeeExists, Unauthorized} from "../../src/AutoPay.Auth.sol";
