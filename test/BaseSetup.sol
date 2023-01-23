@@ -5,8 +5,32 @@ import {AutoPayments} from "../src/AutoPay.sol";
 import {Test} from "forge-std/Test.sol";
 
 contract BaseSetup is Test {
-    bytes32 internal nextUser =
-        keccak256(abi.encodePacked("test test test test test test test test test test test junk"));
+    string seed = "test test test test test test test test test test test junk";
+    bytes32 internal nextUser = keccak256(abi.encodePacked(seed));
+
+    AutoPayments ap;
+
+    address[] _users;
+    address owner;
+    address alice;
+    address bob;
+
+    uint256 locktime = 1000;
+
+    function setUp() public virtual {
+        _users = createUsers(3);
+
+        owner = _users[0];
+        bob = _users[1];
+        alice = _users[2];
+
+        vm.label(owner, "Owner");
+        vm.label(alice, "alice");
+        vm.label(bob, "Bob");
+
+        vm.prank(owner);
+        ap = new AutoPayments(locktime);
+    }
 
     function getNextUserAddress() private returns (address payable) {
         //bytes32 to address conversion
@@ -23,27 +47,5 @@ contract BaseSetup is Test {
             users[i] = user;
         }
         return users;
-    }
-
-    AutoPayments ap;
-
-    address[] _users;
-    address owner;
-    address alice;
-    address bob;
-
-    function setUp() public virtual {
-        _users = createUsers(3);
-
-        owner = _users[0];
-        bob = _users[1];
-        alice = _users[2];
-
-        vm.label(owner, "Owner");
-        vm.label(alice, "alice");
-        vm.label(bob, "Bob");
-
-        vm.prank(owner);
-        ap = new AutoPayments();
     }
 }
