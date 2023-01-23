@@ -11,7 +11,7 @@ error NoEthers();
 abstract contract Auth is Storage {
     using Array for address[];
 
-    constructor() Storage() {}
+    constructor(uint256 _locktime) Storage(_locktime) {}
 
     function onlyOwner(address user) internal view {
         if (user != owner) {

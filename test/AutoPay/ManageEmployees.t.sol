@@ -27,7 +27,7 @@ contract ManageTest is BaseSetup {
         assertEq(employees.length, 1, "Employee not added");
         assertEq(employees[0], newEmployee, "Wrong employee added");
         assertEq(ap.salaryOf(newEmployee), 12, "Wrong salary added for employee");
-        assertEq(ap.nextPayment(newEmployee), 172801, "Next payment not added");
+        assertEq(ap.nextPayment(newEmployee), 1001, "Next payment not added");
     }
 
     function test_that_an_employee_can_be_added_to_the_contract(address newEmployee, uint256 salary) public {
@@ -38,7 +38,7 @@ contract ManageTest is BaseSetup {
         assertEq(employees.length, 1, "Employee not added");
         assertEq(employees[0], newEmployee, "Wrong employee added");
         assertEq(ap.salaryOf(newEmployee), salary, "Wrong salary added for employee");
-        assertEq(ap.nextPayment(newEmployee), 172801, "Next payment not added");
+        assertEq(ap.nextPayment(newEmployee), 1001, "Next payment not added");
     }
 
     function test_that_an_employee_cannot_be_added_twice() public {

@@ -6,7 +6,7 @@ import {Array, Auth, EmployeeNotExists} from "./AutoPay.Auth.sol";
 abstract contract Manage is Auth {
     using Array for address[];
 
-    constructor() Auth() {}
+    constructor(uint256 _locktime) Auth(_locktime) {}
 
     function addEmployee(address employee, uint256 salary) public {
         onlyOwner(msg.sender);
@@ -39,17 +39,8 @@ abstract contract Manage is Auth {
         return mappingOfEmployees[employee].nextPayment;
     }
 
-    function monthInBlocks() internal pure returns (uint256) {
-        uint256 monthInDays = 30;
-        uint256 dayInHours = 24;
-        uint256 hourInSeconds = 3600;
-        uint256 blockInSeconds = 15;
-
-        return (monthInDays * dayInHours * hourInSeconds) / blockInSeconds;
-    }
-
     function nextPayment() internal view returns (uint256) {
-        return block.number + monthInBlocks();
+        return block.number + locktime;
     }
 
     function employees() public view returns (address[] memory) {

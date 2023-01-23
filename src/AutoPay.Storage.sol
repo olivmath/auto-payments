@@ -6,6 +6,7 @@ import {Array} from "./lib/Array.sol";
 
 contract Storage is Events {
     address internal owner;
+    uint256 internal locktime;
 
     struct Employee {
         uint256 nextPayment;
@@ -17,7 +18,8 @@ contract Storage is Events {
     mapping(address => Employee) mappingOfEmployees;
     address[] internal _employees;
 
-    constructor() {
+    constructor(uint256 _locktime) {
+        locktime = _locktime;
         owner = msg.sender;
     }
 }

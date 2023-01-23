@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 import "./AutoPay.Base.sol";
 
 contract AutoPayments is Base {
-    constructor() Base() {}
+    constructor(uint256 _locktime) Base(_locktime) {}
 
     function pay() public payable {
         for (uint256 i = 0; i < _employees.length; i++) {
