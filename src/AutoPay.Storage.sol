@@ -5,6 +5,8 @@ import {Events} from "./AutoPay.Events.sol";
 import {Array} from "./lib/Array.sol";
 
 contract Storage is Events {
+    string public companyName;
+    string public description;
     address internal owner;
     uint256 internal locktime;
 
@@ -18,7 +20,9 @@ contract Storage is Events {
     mapping(address => Employee) mappingOfEmployees;
     address[] internal _employees;
 
-    constructor(uint256 _locktime) {
+    constructor(string memory _companyName, string memory _description, uint256 _locktime) {
+        companyName = _companyName;
+        description = _description;
         locktime = _locktime;
         owner = msg.sender;
     }

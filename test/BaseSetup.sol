@@ -29,7 +29,7 @@ contract BaseSetup is Test {
         vm.label(bob, "Bob");
 
         vm.prank(owner);
-        ap = new AutoPayments(locktime);
+        ap = new AutoPayments("Coca-cola", "The company that produce refri", locktime);
     }
 
     function getNextUserAddress() private returns (address payable) {

@@ -6,7 +6,7 @@ import {Array, Auth, EmployeeNotExists} from "./AutoPay.Auth.sol";
 abstract contract Manage is Auth {
     using Array for address[];
 
-    constructor(uint256 _locktime) Auth(_locktime) {}
+    constructor(string memory _companyName, string memory _description, uint256 _locktime) Auth(_companyName, _description, _locktime) {}
 
     function addEmployee(address employee, uint256 salary) public {
         onlyOwner(msg.sender);

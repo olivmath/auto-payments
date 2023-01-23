@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 import {Manage} from "./AutoPay.Manage.sol";
 
 contract Base is Manage {
-    constructor(uint256 _locktime) Manage(_locktime) {}
+    constructor(string memory _companyName, string memory _description, uint256 _locktime) Manage(_companyName, _description, _locktime) {}
 
     function totalCost() public view returns (uint256) {
         uint256 totalCust = 0;
