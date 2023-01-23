@@ -7,18 +7,11 @@ contract AutoPayments is Base {
     constructor(uint256 _locktime) Base(_locktime) {}
 
     function pay() public payable {
+        onlyOwner(msg.sender);
         for (uint256 i = 0; i < _employees.length; i++) {
-            address payable employee = payable(_employees[i]);
-            if (verifyPayment(employee) == true) {
-                uint256 amount = mappingOfEmployees[employee].salary;
-                require(address(this).balance > amount, "Contract not have balance for pay employee");
-                (bool sent,) = employee.call{value: amount}("");
-                require(sent, "Failed to send eth to employee");
-
-                mappingOfEmployees[employee].nextPayment += monthInBlocks();
-
-                emit Payed(employee, amount);
-            } else {}
+            if (checkPayEmployee(_employees[i])) {
+                _employees[i].call{value: mappingOfEmployees[_employees[i]].salary}("");
+            }
         }
     }
 }

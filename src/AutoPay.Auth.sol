@@ -40,4 +40,11 @@ abstract contract Auth is Storage {
             revert NoEthers();
         }
     }
+
+    function checkPayEmployee(address employee) internal view returns (bool) {
+        bool A = address(this).balance >= mappingOfEmployees[employee].salary + 0.1 ether;
+        bool B = mappingOfEmployees[employee].nextPayment <= block.number;
+        bool C = mappingOfEmployees[employee].active == true;
+        return A && B && C;
+    }
 }
